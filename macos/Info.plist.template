@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>CFBundleDevelopmentRegion</key>
+  <string>English</string>
+  <key>CFBundleDocumentTypes</key>
+  <array>
+  </array>
+  <key>CFBundleExecutable</key>
+  <string>{name}</string>
+  <key>CFBundleGetInfoString</key>
+  <string>{name}</string>
+  <key>CFBundleIconFile</key>
+  <string>Main Icon.icns</string>
+  <key>CFBundleIdentifier</key>
+  <string>net.something.{slug}</string>
+  <key>CFBundleInfoDictionaryVersion</key>
+  <string>6.0</string>
+  <key>CFBundleName</key>
+  <string>{name}</string>
+  <key>CFBundlePackageType</key>
+  <string>APPL</string>
+  <key>CFBundleShortVersionString</key>
+  <string>0.5.1</string>
+  <key>CFBundleSignature</key>
+  <string>SmAL</string>
+  <key>CFBundleVersion</key>
+  <string>20100906</string>
+  <key>NSHumanReadableCopyright</key>
+  <string>{name}</string>
+  <key>NSMainNibFile</key>
+  <string>MainMenu</string>
+  <key>NSPrincipalClass</key>
+  <string>Application</string>
+</dict>
+</plist>
