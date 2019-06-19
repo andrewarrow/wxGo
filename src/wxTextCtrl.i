@@ -1,1 +1,0 @@
-%include "wxGoInterface/textctrl.h"

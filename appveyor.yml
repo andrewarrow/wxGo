@@ -1,10 +1,16 @@
+# use known working MSYS2
+os: Previous Visual Studio 2015
+
 version: 1.0.{build}
 platform: x64
 clone_folder: c:\project\src\github.com\dontpanic92\wxGo
 clone_depth: 5
 environment:
   matrix:
-  - GOROOT: c:\go16
+  - GOROOT: c:\go19
+  - GOROOT: c:\go18
+  - GOROOT: c:\go17
+
 build_script:
 - cmd: >-
 
@@ -20,5 +26,13 @@ build_script:
 
     cd %APPVEYOR_BUILD_FOLDER%
 
-    go get -v -t -x .\\...
+    go get -v -t -x -tags mingw_workaround .\\...
 
+    cd utils
+
+    set GOPATH=/c/project
+
+    bash build_binary_package.sh windows amd64
+
+artifacts:
+  - path: utils/*.zip

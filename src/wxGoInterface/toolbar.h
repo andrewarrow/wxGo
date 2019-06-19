@@ -1,7 +1,4 @@
-WXGO_DECL_TYPECONV(ToolBarToolBase)
-WXGO_DECL_TYPECONV(ToolBar)
-%ignore wxToolBarToolStyle;
-enum wxToolBarToolStyle;
+%typedef int wxToolBarToolStyle;
 #define wxTOOL_STYLE_BUTTON     1
 #define wxTOOL_STYLE_SEPARATOR  2
 #define wxTOOL_STYLE_CONTROL wxTOOL_STYLE_SEPARATOR  + 1
@@ -25,6 +22,7 @@ enum
     wxTB_RIGHT,
     wxTB_DEFAULT_STYLE = wxTB_HORIZONTAL | wxTB_FLAT
 };
+WXGO_DECL_TYPECONV(ToolBarToolBase)
 class wxToolBarToolBase : public wxObject
 {
 public:
@@ -77,6 +75,7 @@ public:
     virtual void SetDropdownMenu(wxMenu *menu);
     wxMenu *GetDropdownMenu() const;
 };
+WXGO_DECL_TYPECONV(ToolBar)
 class wxToolBar : public wxControl
 {
 public:

@@ -1,8 +1,4 @@
-WXGO_DECL_TYPECONV(Dialog)
-WXGO_DECL_TYPECONV(DialogLayoutAdapter)
-WXGO_DECL_TYPECONV(WindowModalDialogEvent)
-%ignore wxDialogLayoutAdaptationMode;
-enum wxDialogLayoutAdaptationMode;
+%typedef int wxDialogLayoutAdaptationMode;
 #define wxDIALOG_ADAPTATION_MODE_DEFAULT  0
 #define wxDIALOG_ADAPTATION_MODE_ENABLED  1
 #define wxDIALOG_ADAPTATION_MODE_DISABLED  2
@@ -12,6 +8,7 @@ enum wxDialogLayoutAdaptationMode;
 #define wxDIALOG_ADAPTATION_STANDARD_SIZER   1  
 #define wxDIALOG_ADAPTATION_ANY_SIZER        2  
 #define wxDIALOG_ADAPTATION_LOOSE_BUTTONS    3  
+WXGO_DECL_TYPECONV(Dialog)
 class wxDialog : public wxTopLevelWindow
 {
 public:
@@ -45,7 +42,7 @@ public:
     int GetLayoutAdaptationLevel() const;
     wxDialogLayoutAdaptationMode GetLayoutAdaptationMode() const;
     static wxDialogLayoutAdapter* GetLayoutAdapter();
-    wxArrayInt& GetMainButtonIds();
+    const wxArrayInt& GetMainButtonIds();
     int GetReturnCode() const;
     virtual void Iconize(bool iconize = true);
     virtual bool IsIconized() const;
@@ -65,6 +62,7 @@ public:
     virtual int ShowModal();
     void ShowWindowModal();
 };
+WXGO_DECL_TYPECONV(DialogLayoutAdapter)
 class wxDialogLayoutAdapter
 {
 public:
@@ -72,6 +70,7 @@ public:
     virtual bool CanDoLayoutAdaptation(wxDialog* dialog) = 0;
     virtual bool DoLayoutAdaptation(wxDialog* dialog) = 0;
 };
+WXGO_DECL_TYPECONV(WindowModalDialogEvent)
 class wxWindowModalDialogEvent  : public wxCommandEvent
 {
 public:

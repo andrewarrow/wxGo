@@ -1,13 +1,12 @@
+%nodefaultctor wxEventLoopBase;
 WXGO_DECL_TYPECONV(EventLoopBase)
-WXGO_DECL_TYPECONV(EventLoopActivator)
-WXGO_DECL_TYPECONV(GUIEventLoop)
 class wxEventLoopBase
 {
 public:
     static wxEventLoopBase *GetActive();
     static void SetActive(wxEventLoopBase* loop);
     bool IsMain() const;
-    virtual int Run() = 0;
+    virtual int Run();
     bool IsRunning() const;
     virtual bool IsOk() const;
     virtual void Exit(int rc = 0);
@@ -25,12 +24,14 @@ public:
 protected:
     virtual void OnExit();
 };
+WXGO_DECL_TYPECONV(EventLoopActivator)
 class wxEventLoopActivator
 {
 public:
     wxEventLoopActivator(wxEventLoopBase *loop);
     ~wxEventLoopActivator();
 };
+WXGO_DECL_TYPECONV(GUIEventLoop)
 class wxGUIEventLoop : public wxEventLoopBase
 {
 public:

@@ -1,8 +1,4 @@
-WXGO_DECL_TYPECONV(FontInfo)
-WXGO_DECL_TYPECONV(Font)
-WXGO_DECL_TYPECONV(FontList)
-%ignore wxFontFamily;
-enum wxFontFamily;
+%typedef int wxFontFamily;
 #define wxFONTFAMILY_DEFAULT  wxDEFAULT
 #define wxFONTFAMILY_DECORATIVE  wxDECORATIVE
 #define wxFONTFAMILY_ROMAN  wxROMAN
@@ -12,20 +8,17 @@ enum wxFontFamily;
 #define wxFONTFAMILY_TELETYPE  wxTELETYPE
 #define wxFONTFAMILY_MAX wxFONTFAMILY_TELETYPE  + 1
 #define wxFONTFAMILY_UNKNOWN  wxFONTFAMILY_MAX
-%ignore wxFontStyle;
-enum wxFontStyle;
+%typedef int wxFontStyle;
 #define wxFONTSTYLE_NORMAL  wxNORMAL
 #define wxFONTSTYLE_ITALIC  wxITALIC
 #define wxFONTSTYLE_SLANT  wxSLANT
 #define wxFONTSTYLE_MAX wxFONTSTYLE_SLANT  + 1
-%ignore wxFontWeight;
-enum wxFontWeight;
+%typedef int wxFontWeight;
 #define wxFONTWEIGHT_NORMAL  wxNORMAL
 #define wxFONTWEIGHT_LIGHT  wxLIGHT
 #define wxFONTWEIGHT_BOLD  wxBOLD
 #define wxFONTWEIGHT_MAX wxFONTWEIGHT_BOLD  + 1
-%ignore wxFontSymbolicSize;
-enum wxFontSymbolicSize;
+%typedef int wxFontSymbolicSize;
 #define wxFONTSIZE_XX_SMALL  -3
 #define wxFONTSIZE_X_SMALL wxFONTSIZE_XX_SMALL  + 1
 #define wxFONTSIZE_SMALL wxFONTSIZE_X_SMALL + 1
@@ -33,8 +26,7 @@ enum wxFontSymbolicSize;
 #define wxFONTSIZE_LARGE wxFONTSIZE_MEDIUM + 1
 #define wxFONTSIZE_X_LARGE wxFONTSIZE_LARGE + 1
 #define wxFONTSIZE_XX_LARGE wxFONTSIZE_X_LARGE + 1
-%ignore wxFontFlag;
-enum wxFontFlag;
+%typedef int wxFontFlag;
 #define wxFONTFLAG_DEFAULT           0
 #define wxFONTFLAG_ITALIC            1 << 0
 #define wxFONTFLAG_SLANT             1 << 1
@@ -45,8 +37,7 @@ enum wxFontFlag;
 #define wxFONTFLAG_UNDERLINED        1 << 6
 #define wxFONTFLAG_STRIKETHROUGH     1 << 7
 #define wxFONTFLAG_MASK  wxFONTFLAG_ITALIC             |                      wxFONTFLAG_SLANT              |                      wxFONTFLAG_LIGHT              |                      wxFONTFLAG_BOLD               |                      wxFONTFLAG_ANTIALIASED        |                      wxFONTFLAG_NOT_ANTIALIASED    |                      wxFONTFLAG_UNDERLINED         |                      wxFONTFLAG_STRIKETHROUGH
-%ignore wxFontEncoding;
-enum wxFontEncoding;
+%typedef int wxFontEncoding;
 #define wxFONTENCODING_SYSTEM  -1
 #define wxFONTENCODING_DEFAULT wxFONTENCODING_SYSTEM  + 1
 #define wxFONTENCODING_ISO8859_1 wxFONTENCODING_DEFAULT + 1
@@ -150,6 +141,7 @@ enum wxFontEncoding;
 #define wxFONTENCODING_EUC_KR  wxFONTENCODING_CP949
 #define wxFONTENCODING_JOHAB  wxFONTENCODING_CP1361
 #define wxFONTENCODING_VIETNAMESE  wxFONTENCODING_CP1258
+WXGO_DECL_TYPECONV(FontInfo)
 class wxFontInfo
 {
 public:
@@ -168,6 +160,7 @@ public:
     wxFontInfo& Encoding(wxFontEncoding encoding);
     wxFontInfo& AllFlags(int flags);
 };
+WXGO_DECL_TYPECONV(Font)
 class wxFont : public wxGDIObject
 {
 public:
@@ -256,6 +249,7 @@ public:
     static wxFont *New(const wxString& nativeInfoString);
 };
 %constant wxFont wxNullFont;
+WXGO_DECL_TYPECONV(FontList)
 class wxFontList
 {
 public:

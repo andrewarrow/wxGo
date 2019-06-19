@@ -22,6 +22,7 @@ need a real parser.
 By dontpanic, 2015/5/16
 """
 
+from __future__ import print_function
 import sys, os, re
 
 regex = re.compile("enum\s*(.+?){(.+?)}.*?;", re.S) 
@@ -49,7 +50,8 @@ def replace_enum(match_object):
     code = ""
     
     if enum_name != "":
-        code += "%ignore " +  enum_name + ";\nenum " + enum_name + ";\n"
+        #code += "%ignore " +  enum_name + ";\nenum " + enum_name + ";\n"
+        code += "%typedef int " + enum_name + ";\n"
     
     enum_items = match_object.group(2).split(',')
     last_item = ""
@@ -72,30 +74,31 @@ def replace_enum(match_object):
         
     return code
 
-def gen_conv_decl(code):
-    exception_list = ["wxGoApp", "wxScrolled", "wxString"]
-    decl = ""
-    for match_object in regex2.finditer(code):
-        if not is_top_level(match_object):
-            continue
-        classname = match_object.group(1).strip()
-        if classname in exception_list:
-            continue
-        conv_name = classname[2:] if classname.startswith("wx") else classname
-        decl += "WXGO_DECL_TYPECONV(" + conv_name + ")\n"
+exception_list = ["wxGoApp", "wxScrolled", "wxString"]
+def gen_conv_decl(match_object):
+    if not is_top_level(match_object):
+        return match_object.group(0)
+    classname = match_object.group(1).strip()
+    if classname in exception_list:
+        return match_object.group(0)
+    conv_name = classname[2:] if classname.startswith("wx") else classname
+    decl = "WXGO_DECL_TYPECONV(" + conv_name + ")\n" + match_object.group(0)
     return decl
 
 def preprocess(ori_file, new_file):
-    print "Processing " + ori_file
+    print("Processing " + ori_file)
     os.system('sed -nf remccoms3.sed ' + ori_file + ' > ' + new_file)
-    code = file(new_file).read()
+    with open(new_file) as f:
+        code = f.read()
     
     if len(code) == 0:
         return
     code = regex.sub(replace_enum, code)
-    conv_decl = gen_conv_decl(code)
+    #conv_decl = gen_conv_decl(code)
+    code = regex2.sub(gen_conv_decl, code)
     code = os.linesep.join([s for s in code.splitlines() if s.rstrip()])
-    file(new_file, "w").write(conv_decl + code) 
+    with open(new_file, "w") as f:
+        f.write(code)
      
 def preprocess_all(ori_folder, new_folder):
     for f in os.listdir(ori_folder):
@@ -109,7 +112,7 @@ def preprocess_all(ori_folder, new_folder):
 
 if __name__ == "__main__":
     if len(sys.argv) < 3:
-        print "Usage: python2 preprocess.py OriginalFolderPath NewFolderPath"
+        print("Usage: python preprocess.py OriginalFolderPath NewFolderPath")
     else:
         os.mkdir(sys.argv[2])
         preprocess_all(sys.argv[1], sys.argv[2])

@@ -1,6 +1,3 @@
-WXGO_DECL_TYPECONV(CalendarEvent)
-WXGO_DECL_TYPECONV(CalendarDateAttr)
-WXGO_DECL_TYPECONV(CalendarCtrl)
 enum
 {
     wxCAL_SUNDAY_FIRST               = 0x0000,
@@ -12,6 +9,7 @@ enum
     wxCAL_SHOW_SURROUNDING_WEEKS     = 0x0020,
     wxCAL_SHOW_WEEK_NUMBERS          = 0x0040
 };
+WXGO_DECL_TYPECONV(CalendarEvent)
 class wxCalendarEvent : public wxDateEvent
 {
 public:
@@ -25,11 +23,11 @@ public:
 %constant wxEventType wxEVT_CALENDAR_DOUBLECLICKED;
 %constant wxEventType wxEVT_CALENDAR_WEEKDAY_CLICKED;
 %constant wxEventType wxEVT_CALENDAR_WEEK_CLICKED;
-%ignore wxCalendarDateBorder;
-enum wxCalendarDateBorder;
+%typedef int wxCalendarDateBorder;
 #define wxCAL_BORDER_NONE 0
 #define wxCAL_BORDER_SQUARE wxCAL_BORDER_NONE + 1
 #define wxCAL_BORDER_ROUND wxCAL_BORDER_SQUARE + 1
+WXGO_DECL_TYPECONV(CalendarDateAttr)
 class wxCalendarDateAttr
 {
 public:
@@ -60,8 +58,7 @@ public:
     static const wxCalendarDateAttr& GetMark();
     static void SetMark(const wxCalendarDateAttr& m);
 };
-%ignore wxCalendarHitTestResult;
-enum wxCalendarHitTestResult;
+%typedef int wxCalendarHitTestResult;
 #define wxCAL_HITTEST_NOWHERE 0
 #define wxCAL_HITTEST_HEADER wxCAL_HITTEST_NOWHERE + 1
 #define wxCAL_HITTEST_DAY wxCAL_HITTEST_HEADER + 1
@@ -69,6 +66,7 @@ enum wxCalendarHitTestResult;
 #define wxCAL_HITTEST_DECMONTH wxCAL_HITTEST_INCMONTH + 1
 #define wxCAL_HITTEST_SURROUNDING_WEEK wxCAL_HITTEST_DECMONTH + 1
 #define wxCAL_HITTEST_WEEK wxCAL_HITTEST_SURROUNDING_WEEK + 1
+WXGO_DECL_TYPECONV(CalendarCtrl)
 class wxCalendarCtrl : public wxControl
 {
 public:

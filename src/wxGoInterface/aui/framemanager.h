@@ -1,8 +1,4 @@
-WXGO_DECL_TYPECONV(AuiManager)
-WXGO_DECL_TYPECONV(AuiPaneInfo)
-WXGO_DECL_TYPECONV(AuiManagerEvent)
-%ignore wxAuiManagerDock;
-enum wxAuiManagerDock;
+%typedef int wxAuiManagerDock;
 #define wxAUI_DOCK_NONE  0
 #define wxAUI_DOCK_TOP  1
 #define wxAUI_DOCK_RIGHT  2
@@ -10,8 +6,7 @@ enum wxAuiManagerDock;
 #define wxAUI_DOCK_LEFT  4
 #define wxAUI_DOCK_CENTER  5
 #define wxAUI_DOCK_CENTRE  wxAUI_DOCK_CENTER
-%ignore wxAuiManagerOption;
-enum wxAuiManagerOption;
+%typedef int wxAuiManagerOption;
 #define wxAUI_MGR_ALLOW_FLOATING            1 << 0
 #define wxAUI_MGR_ALLOW_ACTIVE_PANE         1 << 1
 #define wxAUI_MGR_TRANSPARENT_DRAG          1 << 2
@@ -22,6 +17,7 @@ enum wxAuiManagerOption;
 #define wxAUI_MGR_NO_VENETIAN_BLINDS_FADE   1 << 7
 #define wxAUI_MGR_LIVE_RESIZE               1 << 8
 #define wxAUI_MGR_DEFAULT  wxAUI_MGR_ALLOW_FLOATING |                        wxAUI_MGR_TRANSPARENT_HINT |                        wxAUI_MGR_HINT_FADE |                        wxAUI_MGR_NO_VENETIAN_BLINDS_FADE
+WXGO_DECL_TYPECONV(AuiManager)
 class wxAuiManager : public wxEvtHandler
 {
 public:
@@ -63,6 +59,7 @@ protected:
     virtual bool ProcessDockResult(wxAuiPaneInfo& target,
                                    const wxAuiPaneInfo& new_pos);
 };
+WXGO_DECL_TYPECONV(AuiPaneInfo)
 class wxAuiPaneInfo
 {
 public:
@@ -146,6 +143,7 @@ public:
     wxAuiPaneInfo& Window(wxWindow* w);
     wxAuiPaneInfo& operator=(const wxAuiPaneInfo& c);
 };
+WXGO_DECL_TYPECONV(AuiManagerEvent)
 class wxAuiManagerEvent : public wxEvent
 {
 public:
@@ -163,3 +161,10 @@ public:
     void SetPane(wxAuiPaneInfo* pane);
     void Veto(bool veto = true);
 };
+%constant wxEventType wxEVT_AUI_PANE_BUTTON;
+%constant wxEventType wxEVT_AUI_PANE_CLOSE;
+%constant wxEventType wxEVT_AUI_PANE_MAXIMIZE;
+%constant wxEventType wxEVT_AUI_PANE_RESTORE;
+%constant wxEventType wxEVT_AUI_PANE_ACTIVATED;
+%constant wxEventType wxEVT_AUI_RENDER;
+%constant wxEventType wxEVT_AUI_FIND_MANAGER;

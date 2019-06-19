@@ -4,8 +4,8 @@ dist: trusty
 language: go
 
 go:
-  - 1.6
-  - 1.7
+  - 1.8.x
+  - 1.9.x
   - tip
 
 os:
@@ -21,11 +21,22 @@ addons:
       - g++-5
       - libxxf86vm-dev
       - libnotify-dev
-      - libgtk2.0-dev
+      - libgtk-3-dev
       - libpango1.0-dev
       - libatk1.0-dev
+      - libglib2.0-dev
+      - libglib2.0-0
+      - libglu1-mesa-dev
+      - libjpeg-dev
+      - libtiff-dev
+      - libgstreamer1.0-dev
+      - libgstreamer-plugins-base1.0-dev
+      - libwebkitgtk-3.0-dev
       
-      
+before_install:
+  - rvm install 2.2.6
+  - gem install dropbox-deployment
+
 install:
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then free -m; fi
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-5 90; fi
@@ -35,5 +46,22 @@ script:
   - gcc --version
   - g++ --version
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ld --version; fi
-  - travis_wait 30 go get -t -v -x ./...
-  
+  - travis_wait 50 go get -t -v -x ./...
+  - cd utils
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then travis_wait 50 bash build_binary_package.sh linux amd64; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then travis_wait 50 bash build_binary_package.sh darwin amd64; fi
+
+# the following base64 encoded string is:
+# deploy:
+#   dropbox_path: /builds
+#   artifacts_path: "builds"
+#   debug: true
+# It is a pain to contain YAML in YAML
+after_success:
+  - mkdir builds
+  - mv *.zip builds
+  - echo ZGVwbG95OgogIGRyb3Bib3hfcGF0aDogL2J1aWxkcwogIGFydGlmYWN0c19wYXRoOiAiYnVpbGRzIgogIGRlYnVnOiB0cnVlCg== | base64 --decode > dropbox-deployment.yml
+  - pwd
+  - ls
+  - cat dropbox-deployment.yml
+  - if [ "$TRAVIS_BRANCH" == "master" ] && [ "$TRAVIS_PULL_REQUEST" == "false" ]; then dropbox-deployment; fi

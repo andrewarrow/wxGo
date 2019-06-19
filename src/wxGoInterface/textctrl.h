@@ -1,7 +1,3 @@
-WXGO_DECL_TYPECONV(TextAttr)
-WXGO_DECL_TYPECONV(TextEntry)
-WXGO_DECL_TYPECONV(TextCtrl)
-WXGO_DECL_TYPECONV(TextUrlEvent)
 #define wxTE_NO_VSCROLL     0x0002
 #define wxTE_READONLY       0x0010
 #define wxTE_MULTILINE      0x0020
@@ -22,16 +18,14 @@ WXGO_DECL_TYPECONV(TextUrlEvent)
 #define wxTE_RICH2          0x8000
 #define wxTEXT_TYPE_ANY     0
 typedef long wxTextCoord;
-%ignore wxTextAttrAlignment;
-enum wxTextAttrAlignment;
+%typedef int wxTextAttrAlignment;
 #define wxTEXT_ALIGNMENT_DEFAULT 0
 #define wxTEXT_ALIGNMENT_LEFT wxTEXT_ALIGNMENT_DEFAULT + 1
 #define wxTEXT_ALIGNMENT_CENTRE wxTEXT_ALIGNMENT_LEFT + 1
 #define wxTEXT_ALIGNMENT_CENTER  wxTEXT_ALIGNMENT_CENTRE
 #define wxTEXT_ALIGNMENT_RIGHT wxTEXT_ALIGNMENT_CENTER  + 1
 #define wxTEXT_ALIGNMENT_JUSTIFIED wxTEXT_ALIGNMENT_RIGHT + 1
-%ignore wxTextAttrFlags;
-enum wxTextAttrFlags;
+%typedef int wxTextAttrFlags;
 #define wxTEXT_ATTR_TEXT_COLOUR           0x00000001
 #define wxTEXT_ATTR_BACKGROUND_COLOUR     0x00000002
 #define wxTEXT_ATTR_FONT_FACE             0x00000004
@@ -64,11 +58,12 @@ enum wxTextAttrFlags;
 #define wxTEXT_ATTR_PAGE_BREAK            0x00400000
 #define wxTEXT_ATTR_EFFECTS               0x00800000
 #define wxTEXT_ATTR_OUTLINE_LEVEL         0x01000000
+#define wxTEXT_ATTR_AVOID_PAGE_BREAK_BEFORE  0x20000000
+#define wxTEXT_ATTR_AVOID_PAGE_BREAK_AFTER  0x40000000
 #define wxTEXT_ATTR_CHARACTER  \        (wxTEXT_ATTR_FONT|wxTEXT_ATTR_EFFECTS| \            wxTEXT_ATTR_BACKGROUND_COLOUR|wxTEXT_ATTR_TEXT_COLOUR|wxTEXT_ATTR_CHARACTER_STYLE_NAME|wxTEXT_ATTR_URL)
-#define wxTEXT_ATTR_PARAGRAPH  \        (wxTEXT_ATTR_ALIGNMENT|wxTEXT_ATTR_LEFT_INDENT|wxTEXT_ATTR_RIGHT_INDENT|wxTEXT_ATTR_TABS|\            wxTEXT_ATTR_PARA_SPACING_BEFORE|wxTEXT_ATTR_PARA_SPACING_AFTER|wxTEXT_ATTR_LINE_SPACING|\            wxTEXT_ATTR_BULLET|wxTEXT_ATTR_PARAGRAPH_STYLE_NAME|wxTEXT_ATTR_LIST_STYLE_NAME|wxTEXT_ATTR_OUTLINE_LEVEL)
+#define wxTEXT_ATTR_PARAGRAPH  \        (wxTEXT_ATTR_ALIGNMENT|wxTEXT_ATTR_LEFT_INDENT|wxTEXT_ATTR_RIGHT_INDENT|wxTEXT_ATTR_TABS|\            wxTEXT_ATTR_PARA_SPACING_BEFORE|wxTEXT_ATTR_PARA_SPACING_AFTER|wxTEXT_ATTR_LINE_SPACING|\            wxTEXT_ATTR_BULLET|wxTEXT_ATTR_PARAGRAPH_STYLE_NAME|wxTEXT_ATTR_LIST_STYLE_NAME|wxTEXT_ATTR_OUTLINE_LEVEL|\            wxTEXT_ATTR_PAGE_BREAK|wxTEXT_ATTR_AVOID_PAGE_BREAK_BEFORE|wxTEXT_ATTR_AVOID_PAGE_BREAK_AFTER)
 #define wxTEXT_ATTR_ALL  (wxTEXT_ATTR_CHARACTER|wxTEXT_ATTR_PARAGRAPH)
-%ignore wxTextAttrBulletStyle;
-enum wxTextAttrBulletStyle;
+%typedef int wxTextAttrBulletStyle;
 #define wxTEXT_ATTR_BULLET_STYLE_NONE             0x00000000
 #define wxTEXT_ATTR_BULLET_STYLE_ARABIC           0x00000001
 #define wxTEXT_ATTR_BULLET_STYLE_LETTERS_UPPER    0x00000002
@@ -86,8 +81,7 @@ enum wxTextAttrBulletStyle;
 #define wxTEXT_ATTR_BULLET_STYLE_ALIGN_RIGHT      0x00001000
 #define wxTEXT_ATTR_BULLET_STYLE_ALIGN_CENTRE     0x00002000
 #define wxTEXT_ATTR_BULLET_STYLE_CONTINUATION     0x00004000
-%ignore wxTextAttrEffects;
-enum wxTextAttrEffects;
+%typedef int wxTextAttrEffects;
 #define wxTEXT_ATTR_EFFECT_NONE                   0x00000000
 #define wxTEXT_ATTR_EFFECT_CAPITALS               0x00000001
 #define wxTEXT_ATTR_EFFECT_SMALL_CAPITALS         0x00000002
@@ -99,18 +93,19 @@ enum wxTextAttrEffects;
 #define wxTEXT_ATTR_EFFECT_ENGRAVE                0x00000080
 #define wxTEXT_ATTR_EFFECT_SUPERSCRIPT            0x00000100
 #define wxTEXT_ATTR_EFFECT_SUBSCRIPT              0x00000200
-%ignore wxTextAttrLineSpacing;
-enum wxTextAttrLineSpacing;
+#define wxTEXT_ATTR_EFFECT_RTL                    0x00000400
+#define wxTEXT_ATTR_EFFECT_SUPPRESS_HYPHENATION   0x00001000
+%typedef int wxTextAttrLineSpacing;
 #define wxTEXT_ATTR_LINE_SPACING_NORMAL          10
 #define wxTEXT_ATTR_LINE_SPACING_HALF            15
 #define wxTEXT_ATTR_LINE_SPACING_TWICE           20
-%ignore wxTextCtrlHitTestResult;
-enum wxTextCtrlHitTestResult;
+%typedef int wxTextCtrlHitTestResult;
 #define wxTE_HT_UNKNOWN  -2
 #define wxTE_HT_BEFORE wxTE_HT_UNKNOWN  + 1
 #define wxTE_HT_ON_TEXT wxTE_HT_BEFORE + 1
 #define wxTE_HT_BELOW wxTE_HT_ON_TEXT + 1
 #define wxTE_HT_BEYOND wxTE_HT_BELOW + 1
+WXGO_DECL_TYPECONV(TextAttr)
 class wxTextAttr
 {
 public:
@@ -224,54 +219,9 @@ public:
     void SetTextEffectFlags(int flags);
     void SetTextEffects(int effects);
     void SetURL(const wxString& url);
+    void operator=(const wxTextAttr& attr);
 };
-typedef long wxTextPos;
-%nodefaultctor wxTextEntry;
-class wxTextEntry
-{
-public:
-    virtual void AppendText(const wxString& text);
-    bool AutoComplete(const wxArrayString& choices);
-    bool AutoComplete(wxTextCompleter *completer);
-    bool AutoCompleteFileNames();
-    bool AutoCompleteDirectories();
-    virtual bool CanCopy() const;
-    virtual bool CanCut() const;
-    virtual bool CanPaste() const;
-    virtual bool CanRedo() const;
-    virtual bool CanUndo() const;
-    virtual void ChangeValue(const wxString& value);
-    virtual void Clear();
-    virtual void Copy();
-    virtual void Cut();
-    virtual long GetInsertionPoint() const;
-    virtual wxTextPos GetLastPosition() const;
-    virtual wxString GetRange(long from, long to) const;
-    virtual void GetSelection(long* from, long* to) const;
-    virtual wxString GetStringSelection() const;
-    virtual wxString GetValue() const;
-    virtual bool IsEditable() const;
-    virtual bool IsEmpty() const;
-    virtual void Paste();
-    virtual void Redo();
-    virtual void Remove(long from, long to);
-    virtual void Replace(long from, long to, const wxString& value);
-    virtual void SetEditable(bool editable);
-    virtual void SetInsertionPoint(long pos);
-    virtual void SetInsertionPointEnd();
-    virtual void SetMaxLength(unsigned long len);
-    virtual void SetSelection(long from, long to);
-    virtual void SelectAll();
-    virtual void SelectNone();
-    virtual bool SetHint(const wxString& hint);
-    virtual wxString GetHint() const;
-    bool SetMargins(const wxPoint& pt);
-    bool SetMargins(wxCoord left, wxCoord top = -1);
-    wxPoint GetMargins() const;
-    virtual void SetValue(const wxString& value);
-    virtual void Undo();
-    virtual void WriteText(const wxString& text);
-};
+WXGO_DECL_TYPECONV(TextCtrl)
 class wxTextCtrl : public wxControl,
                    public wxTextEntry
 {
@@ -323,6 +273,7 @@ public:
 %constant wxEventType wxEVT_TEXT_ENTER;
 %constant wxEventType wxEVT_TEXT_URL;
 %constant wxEventType wxEVT_TEXT_MAXLEN;
+WXGO_DECL_TYPECONV(TextUrlEvent)
 class wxTextUrlEvent : public wxCommandEvent
 {
 public:

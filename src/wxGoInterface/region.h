@@ -1,12 +1,10 @@
-WXGO_DECL_TYPECONV(RegionIterator)
-WXGO_DECL_TYPECONV(Region)
-%ignore wxRegionContain;
-enum wxRegionContain;
+%typedef int wxRegionContain;
 #define wxOutRegion  0
 #define wxPartRegion  1
 #define wxInRegion  2
 %rename(Next) wxRegionIterator::operator ++;
 %rename(HasNext) wxRegionIterator::operator bool;
+WXGO_DECL_TYPECONV(RegionIterator)
 class wxRegionIterator : public wxObject
 {
 public:
@@ -25,6 +23,7 @@ public:
     wxRegionIterator& operator ++();
     operator bool() const;
 };
+WXGO_DECL_TYPECONV(Region)
 class wxRegion : public wxGDIObject
 {
 public:

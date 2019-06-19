@@ -1,6 +1,4 @@
-WXGO_DECL_TYPECONV(Window)
-%ignore wxShowEffect;
-enum wxShowEffect;
+%typedef int wxShowEffect;
 #define wxSHOW_EFFECT_NONE 0
 #define wxSHOW_EFFECT_ROLL_TO_LEFT wxSHOW_EFFECT_NONE + 1
 #define wxSHOW_EFFECT_ROLL_TO_RIGHT wxSHOW_EFFECT_ROLL_TO_LEFT + 1
@@ -23,13 +21,13 @@ struct  wxVisualAttributes
     wxColour colFg;
     wxColour colBg;
 };
-%ignore wxWindowVariant;
-enum wxWindowVariant;
+%typedef int wxWindowVariant;
 #define wxWINDOW_VARIANT_NORMAL 0
 #define wxWINDOW_VARIANT_SMALL wxWINDOW_VARIANT_NORMAL + 1
 #define wxWINDOW_VARIANT_MINI wxWINDOW_VARIANT_SMALL + 1
 #define wxWINDOW_VARIANT_LARGE wxWINDOW_VARIANT_MINI + 1
 #define wxWINDOW_VARIANT_MAX wxWINDOW_VARIANT_LARGE + 1
+WXGO_DECL_TYPECONV(Window)
 class wxWindow : public wxEvtHandler
 {
 public:
@@ -96,6 +94,8 @@ public:
     virtual void Fit();
     virtual void FitInside();
     wxSize GetBestSize() const;
+    int GetBestHeight(int width) const;
+    int GetBestWidth(int height) const;
     wxSize GetClientSize() const;
     virtual wxSize GetEffectiveMinSize() const;
     virtual wxSize GetMaxClientSize() const;
@@ -120,26 +120,39 @@ public:
     void PostSizeEventToParent();
     virtual void SendSizeEvent(int flags = 0);
     void SendSizeEventToParent(int flags = 0);
+    void SetClientSize(int width, int height);
     void SetClientSize(const wxSize& size);
+    void SetClientSize(const wxRect& rect);
     void SetContainingSizer(wxSizer* sizer);
     void SetInitialSize(const wxSize& size = wxDefaultSize);
     virtual void SetMaxClientSize(const wxSize& size);
     virtual void SetMaxSize(const wxSize& size);
     virtual void SetMinClientSize(const wxSize& size);
     virtual void SetMinSize(const wxSize& size);
+    void SetSize(int x, int y, int width, int height,
+                 int sizeFlags = wxSIZE_AUTO);
+    void SetSize(const wxRect& rect);
     void SetSize(const wxSize& size);
+    void SetSize(int width, int height);
     virtual void SetSizeHints( const wxSize& minSize,
                                const wxSize& maxSize=wxDefaultSize,
                                const wxSize& incSize=wxDefaultSize);
+    virtual void SetSizeHints( int minW, int minH,
+                               int maxW = -1, int maxH = -1,
+                               int incW = -1, int incH = -1 );
+    void SetVirtualSize(int width, int height);
     void SetVirtualSize(const wxSize& size);
     void Center(int dir = wxBOTH);
     void CenterOnParent(int dir = wxBOTH);
+    void Centre(int direction = wxBOTH);
+    void CentreOnParent(int direction = wxBOTH);
     wxPoint GetPosition() const;
     wxRect GetRect() const;
     wxPoint GetScreenPosition() const;
     wxRect GetScreenRect() const;
     virtual wxPoint GetClientAreaOrigin() const;
     wxRect GetClientRect() const;
+    void Move(int x, int y, int flags = wxSIZE_USE_EXISTING);
     void Move(const wxPoint& pt, int flags = wxSIZE_USE_EXISTING);
     void SetPosition(const wxPoint& pt);
     wxPoint ClientToScreen(const wxPoint& pt) const;
@@ -213,7 +226,9 @@ public:
     virtual bool HideWithEffect(wxShowEffect effect,
                                 unsigned int timeout = 0);
     bool IsEnabled() const;
+    bool IsExposed(int x, int y) const;
     bool IsExposed(wxPoint& pt) const;
+    bool IsExposed(int x, int y, int w, int h) const;
     bool IsExposed(wxRect& rect) const;
     virtual bool IsShown() const;
     virtual bool IsShownOnScreen() const;
@@ -235,6 +250,7 @@ public:
                                       const wxPoint& pos = wxDefaultPosition);
     bool PopupMenu(wxMenu* menu,
                    const wxPoint& pos = wxDefaultPosition);
+    bool PopupMenu(wxMenu* menu, int x, int y);
     virtual wxValidator* GetValidator();
     virtual void SetValidator(const wxValidator& validator);
     virtual bool TransferDataFromWindow();
@@ -282,7 +298,7 @@ public:
     wxBorder GetBorder() const;
     virtual void DoUpdateWindowUI(wxUpdateUIEvent& event);
 #ifdef __WXMSW__
-    virtual long GetHandle() const;
+    virtual WXWidget GetHandle() const;
 #endif
     virtual bool HasMultiplePages() const;
     virtual void InheritAttributes();

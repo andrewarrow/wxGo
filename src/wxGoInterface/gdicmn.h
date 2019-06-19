@@ -1,10 +1,4 @@
-WXGO_DECL_TYPECONV(RealPoint)
-WXGO_DECL_TYPECONV(Rect)
-WXGO_DECL_TYPECONV(Point)
-WXGO_DECL_TYPECONV(ColourDatabase)
-WXGO_DECL_TYPECONV(Size)
-%ignore wxBitmapType;
-enum wxBitmapType;
+%typedef int wxBitmapType;
 #define wxBITMAP_TYPE_INVALID 0
 #define wxBITMAP_TYPE_BMP wxBITMAP_TYPE_INVALID + 1
 #define wxBITMAP_TYPE_BMP_RESOURCE wxBITMAP_TYPE_BMP + 1
@@ -41,12 +35,10 @@ enum wxBitmapType;
 #define wxBITMAP_TYPE_MACCURSOR wxBITMAP_TYPE_TGA + 1
 #define wxBITMAP_TYPE_MACCURSOR_RESOURCE wxBITMAP_TYPE_MACCURSOR + 1
 #define wxBITMAP_TYPE_ANY  50
-%ignore wxPolygonFillMode;
-enum wxPolygonFillMode;
+%typedef int wxPolygonFillMode;
 #define wxODDEVEN_RULE  1
 #define wxWINDING_RULE wxODDEVEN_RULE  + 1
-%ignore wxStockCursor;
-enum wxStockCursor;
+%typedef int wxStockCursor;
 #define wxCURSOR_NONE 0
 #define wxCURSOR_ARROW wxCURSOR_NONE + 1
 #define wxCURSOR_RIGHT_ARROW wxCURSOR_ARROW + 1
@@ -77,6 +69,7 @@ enum wxStockCursor;
 #define wxCURSOR_DEFAULT wxCURSOR_BLANK + 1
 #define wxCURSOR_ARROWWAIT wxCURSOR_DEFAULT + 1
 #define wxCURSOR_MAX wxCURSOR_ARROWWAIT + 1
+WXGO_DECL_TYPECONV(RealPoint)
 class wxRealPoint
 {
 public:
@@ -86,6 +79,7 @@ public:
     double x;
     double y;
 };
+WXGO_DECL_TYPECONV(Rect)
 class wxRect
 {
 public:
@@ -140,6 +134,7 @@ public:
     void SetBottomLeft(const wxPoint &p);
     wxRect& Union(const wxRect& rect);
 };
+WXGO_DECL_TYPECONV(Point)
 class wxPoint
 {
 public:
@@ -152,6 +147,7 @@ public:
     int  y;
 };
 %constant wxPoint wxDefaultPosition;
+WXGO_DECL_TYPECONV(ColourDatabase)
 class wxColourDatabase
 {
 public:
@@ -161,6 +157,7 @@ public:
     wxString FindName(const wxColour& colour) const;
 };
 %constant wxColourDatabase* wxTheColourDatabase;
+WXGO_DECL_TYPECONV(Size)
 class wxSize
 {
 public:

@@ -1,10 +1,8 @@
-WXGO_DECL_TYPECONV(ColourPickerCtrl)
-WXGO_DECL_TYPECONV(ColourPickerEvent)
 #define wxCLRP_USE_TEXTCTRL       (wxPB_USE_TEXTCTRL)
 #define wxCLRP_DEFAULT_STYLE      0
 #define wxCLRP_SHOW_LABEL         0x0008
 %constant wxEventType wxEVT_COLOURPICKER_CHANGED;
-%feature("notabstract") wxColourPickerCtrl;
+WXGO_DECL_TYPECONV(ColourPickerCtrl)
 class wxColourPickerCtrl : public wxPickerBase
 {
 public:
@@ -27,6 +25,7 @@ public:
     void SetColour(const wxColour& col);
     void SetColour(const wxString& colname);
 };
+WXGO_DECL_TYPECONV(ColourPickerEvent)
 class wxColourPickerEvent : public wxCommandEvent
 {
 public:

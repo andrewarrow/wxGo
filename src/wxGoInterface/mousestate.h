@@ -1,6 +1,4 @@
-WXGO_DECL_TYPECONV(MouseState)
-%ignore wxMouseButton;
-enum wxMouseButton;
+%typedef int wxMouseButton;
 #define wxMOUSE_BTN_ANY      -1
 #define wxMOUSE_BTN_NONE     0
 #define wxMOUSE_BTN_LEFT     1
@@ -9,6 +7,7 @@ enum wxMouseButton;
 #define wxMOUSE_BTN_AUX1     4
 #define wxMOUSE_BTN_AUX2     5
 #define wxMOUSE_BTN_MAX wxMOUSE_BTN_AUX2     + 1
+WXGO_DECL_TYPECONV(MouseState)
 class wxMouseState : public wxKeyboardState
 {
 public:

@@ -1,5 +1,4 @@
 WXGO_DECL_TYPECONV(ItemContainerImmutable)
-WXGO_DECL_TYPECONV(ItemContainer)
 class wxItemContainerImmutable
 {
 public:
@@ -16,6 +15,7 @@ public:
     virtual wxString GetStringSelection() const;
     void Select(int n);
 };
+WXGO_DECL_TYPECONV(ItemContainer)
 class wxItemContainer : public wxItemContainerImmutable
 {
 public:
@@ -23,13 +23,6 @@ public:
     int Append(const wxString& item, void* clientData);
     int Append(const wxString& item, wxClientData* clientData);
     int Append(const wxArrayString& items);
-    int Append(const wxArrayString& items, void **clientData);
-    int Append(const wxArrayString& items, wxClientData **clientData);
-    int Append(unsigned int n, const wxString* items);
-    int Append(unsigned int n, const wxString* items,
-               void** clientData);
-    int Append(unsigned int n, const wxString* items,
-                wxClientData** clientData);
     void Clear();
     void Delete(unsigned int n);
     wxClientData *DetachClientObject(unsigned int n);
@@ -45,22 +38,9 @@ public:
     int Insert(const wxString& item, unsigned int pos,
                wxClientData* clientData);
     int Insert(const wxArrayString& items, unsigned int pos);
-    int Insert(const wxArrayString& items, unsigned int pos,
-                void **clientData);
-    int Insert(const wxArrayString& items, unsigned int pos,
-                wxClientData **clientData);
-    int Insert(unsigned int n, const wxString* items,
-                unsigned int pos);
-    int Insert(unsigned int n, const wxString* items,
-                unsigned int pos,
-                void** clientData);
-    int Insert(unsigned int n, const wxString* items,
-                unsigned int pos,
-                wxClientData** clientData);
     void Set(const wxArrayString& items);
-    void Set(const wxArrayString& items, void **clientData);
-    void Set(const wxArrayString& items, wxClientData **clientData);
-    void Set(unsigned int n, const wxString* items);
-    void Set(unsigned int n, const wxString* items, void** clientData);
-    void Set(unsigned int n, const wxString* items, wxClientData** clientData);
+};
+WXGO_DECL_TYPECONV(ControlWithItems)
+class wxControlWithItems : public wxControl, public wxItemContainer
+{
 };

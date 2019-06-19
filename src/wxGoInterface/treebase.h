@@ -1,5 +1,4 @@
 WXGO_DECL_TYPECONV(TreeItemId)
-WXGO_DECL_TYPECONV(TreeItemData)
 class wxTreeItemId
 {
 public:
@@ -10,6 +9,7 @@ public:
 };
 bool operator==(const wxTreeItemId& left, const wxTreeItemId& right);
 bool operator!=(const wxTreeItemId& left, const wxTreeItemId& right);
+WXGO_DECL_TYPECONV(TreeItemData)
 class wxTreeItemData : public wxClientData
 {
 public:
@@ -18,8 +18,7 @@ public:
     const wxTreeItemId& GetId() const;
     void SetId(const wxTreeItemId& id);
 };
-%ignore wxTreeItemIcon;
-enum wxTreeItemIcon;
+%typedef int wxTreeItemIcon;
 #define wxTreeItemIcon_Normal 0
 #define wxTreeItemIcon_Selected wxTreeItemIcon_Normal + 1
 #define wxTreeItemIcon_Expanded wxTreeItemIcon_Selected + 1

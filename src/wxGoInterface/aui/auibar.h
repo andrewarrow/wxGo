@@ -1,10 +1,4 @@
-WXGO_DECL_TYPECONV(AuiToolBarEvent)
-WXGO_DECL_TYPECONV(AuiToolBarItem)
-WXGO_DECL_TYPECONV(AuiToolBarArt)
-WXGO_DECL_TYPECONV(AuiDefaultToolBarArt)
-WXGO_DECL_TYPECONV(AuiToolBar)
-%ignore wxAuiToolBarStyle;
-enum wxAuiToolBarStyle;
+%typedef int wxAuiToolBarStyle;
 #define wxAUI_TB_TEXT           1 << 0
 #define wxAUI_TB_NO_TOOLTIPS    1 << 1
 #define wxAUI_TB_NO_AUTORESIZE  1 << 2
@@ -17,17 +11,16 @@ enum wxAuiToolBarStyle;
 #define wxAUI_TB_HORZ_TEXT      (wxAUI_TB_HORZ_LAYOUT | wxAUI_TB_TEXT)
 #define wxAUI_ORIENTATION_MASK  (wxAUI_TB_VERTICAL | wxAUI_TB_HORIZONTAL)
 #define wxAUI_TB_DEFAULT_STYLE  0
-%ignore wxAuiToolBarArtSetting;
-enum wxAuiToolBarArtSetting;
+%typedef int wxAuiToolBarArtSetting;
 #define wxAUI_TBART_SEPARATOR_SIZE  0
 #define wxAUI_TBART_GRIPPER_SIZE  1
 #define wxAUI_TBART_OVERFLOW_SIZE  2
-%ignore wxAuiToolBarToolTextOrientation;
-enum wxAuiToolBarToolTextOrientation;
+%typedef int wxAuiToolBarToolTextOrientation;
 #define wxAUI_TBTOOL_TEXT_LEFT  0
 #define wxAUI_TBTOOL_TEXT_RIGHT  1
 #define wxAUI_TBTOOL_TEXT_TOP  2
 #define wxAUI_TBTOOL_TEXT_BOTTOM  3
+WXGO_DECL_TYPECONV(AuiToolBarEvent)
 class wxAuiToolBarEvent : public wxNotifyEvent
 {
 public:
@@ -36,6 +29,7 @@ public:
     wxRect GetItemRect() const;
     int GetToolId() const;
 };
+WXGO_DECL_TYPECONV(AuiToolBarItem)
 class wxAuiToolBarItem
 {
 public:
@@ -82,6 +76,7 @@ public:
     void SetAlignment(int l);
     int GetAlignment() const;
 };
+WXGO_DECL_TYPECONV(AuiToolBarArt)
 class wxAuiToolBarArt
 {
 public:
@@ -148,6 +143,7 @@ public:
                          wxWindow* wnd,
                          const wxAuiToolBarItemArray& items) = 0;
 };
+WXGO_DECL_TYPECONV(AuiDefaultToolBarArt)
 class wxAuiDefaultToolBarArt : public wxAuiToolBarArt
 {
 public:
@@ -213,6 +209,7 @@ public:
     virtual int ShowDropDown(wxWindow* wnd,
                              const wxAuiToolBarItemArray& items);
 };
+WXGO_DECL_TYPECONV(AuiToolBar)
 class wxAuiToolBar : public wxControl
 {
 public:
@@ -317,3 +314,8 @@ public:
     wxSize GetHintSize(int dock_direction) const;
     bool IsPaneValid(const wxAuiPaneInfo& pane) const;
 };
+%constant wxEventType wxEVT_AUITOOLBAR_TOOL_DROPDOWN;
+%constant wxEventType wxEVT_AUITOOLBAR_OVERFLOW_CLICK;
+%constant wxEventType wxEVT_AUITOOLBAR_RIGHT_CLICK;
+%constant wxEventType wxEVT_AUITOOLBAR_MIDDLE_CLICK;
+%constant wxEventType wxEVT_AUITOOLBAR_BEGIN_DRAG;

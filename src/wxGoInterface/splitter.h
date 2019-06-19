@@ -1,5 +1,3 @@
-WXGO_DECL_TYPECONV(SplitterWindow)
-WXGO_DECL_TYPECONV(SplitterEvent)
 #define wxSP_NOBORDER         0x0000
 #define wxSP_THIN_SASH        0x0000    
 #define wxSP_NOSASH           0x0010
@@ -10,8 +8,7 @@ WXGO_DECL_TYPECONV(SplitterEvent)
 #define wxSP_NO_XP_THEME      0x0400
 #define wxSP_BORDER           wxSP_3DBORDER
 #define wxSP_3D               (wxSP_3DBORDER | wxSP_3DSASH)
-%ignore wxSplitMode;
-enum wxSplitMode;
+%typedef int wxSplitMode;
 #define wxSPLIT_HORIZONTAL  1
 #define wxSPLIT_VERTICAL wxSPLIT_HORIZONTAL  + 1
 enum
@@ -20,6 +17,7 @@ enum
     wxSPLIT_DRAG_DRAGGING,
     wxSPLIT_DRAG_LEFT_DOWN
 };
+WXGO_DECL_TYPECONV(SplitterWindow)
 class wxSplitterWindow : public wxWindow
 {
 public:
@@ -61,6 +59,7 @@ public:
     bool Unsplit(wxWindow* toRemove = NULL);
     void UpdateSize();
 };
+WXGO_DECL_TYPECONV(SplitterEvent)
 class wxSplitterEvent : public wxNotifyEvent
 {
 public:
